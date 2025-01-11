@@ -1,4 +1,4 @@
-package main.java.com.assignment.designPatterns.Singleton.ConnectionPool;
+package main.java.com.assignment.designPatterns.Singleton.ConnectionPool.self;
 
 
 public interface ConnectionPool {

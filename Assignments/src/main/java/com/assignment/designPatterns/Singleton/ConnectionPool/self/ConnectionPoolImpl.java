@@ -1,64 +1,76 @@
-package main.java.com.assignment.designPatterns.Singleton.ConnectionPool;
+package main.java.com.assignment.designPatterns.Singleton.ConnectionPool.self;
 
 
-import java.util.List;
+
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class ConnectionPoolImpl implements ConnectionPool {
-    private static ConnectionPoolImpl  instance;
-    Queue<DatabaseConnection> dbConnectionList;
+    private static ConnectionPoolImpl instance;
+    private Queue<DatabaseConnection> dbConnectionList;
     private int totalSize;
-    private int currSize;
-    private ConnectionPoolImpl(int maxConnections){
+    private int availableSize;
+
+    // Private constructor to prevent direct instantiation
+    private ConnectionPoolImpl(int maxConnections) {
         totalSize = maxConnections;
-        currSize = 0;
-        dbConnectionList = new ConcurrentLinkedQueue<>();
+        availableSize = maxConnections;
+        dbConnectionList = new ConcurrentLinkedQueue<>(); // thread-safe queue
     }
-    public static ConnectionPoolImpl getInstance(int maxConnections){
-        if(instance == null){
-            synchronized(ConnectionPoolImpl.class){
-                if(instance == null){
-                    instance = new ConnectionPoolImpl( maxConnections);
+
+    public static ConnectionPoolImpl getInstance(int maxConnections) {
+        if (instance == null) {
+            synchronized (ConnectionPoolImpl.class) {
+                if (instance == null) {
+                    instance = new ConnectionPoolImpl(maxConnections);
                 }
             }
         }
         return instance;
     }
-    public static void resetInstance(){
+
+    public static void resetInstance() {
         instance = null;
     }
+
     @Override
     public void initializePool() {
-        while(totalSize>currSize){
+        // Initialize the pool with the max number of connections
+        for (int i = 0; i < totalSize; i++) {
             dbConnectionList.add(new DatabaseConnection());
-            currSize++;
         }
     }
 
     @Override
     public DatabaseConnection getConnection() {
-        if(currSize>0){
-            dbConnectionList.peek().available = false;
+        // Check if there's an available connection
+        if (availableSize > 0) {
+            DatabaseConnection connection = dbConnectionList.poll(); // Get connection from the pool
+            if (connection != null) {
+                connection.setAvailable(false); // Mark connection as unavailable
+                availableSize--; // Decrease available count
+                return connection;
+            }
         }
-        currSize--;
-        return dbConnectionList.poll();
+        // If no connection is available, return null
+        return null;
     }
 
     @Override
     public void releaseConnection(DatabaseConnection connection) {
-        connection.available = true;
-        currSize++;
+        // Mark the connection as available and add it back to the pool
+        connection.setAvailable(true);
         dbConnectionList.add(connection);
+        availableSize++; // Increase available count
     }
 
     @Override
     public int getAvailableConnectionsCount() {
-        return currSize;
+        return availableSize; // Return available connections count
     }
 
     @Override
     public int getTotalConnectionsCount() {
-        return totalSize;
+        return totalSize; // Return total number of connections
     }
 }

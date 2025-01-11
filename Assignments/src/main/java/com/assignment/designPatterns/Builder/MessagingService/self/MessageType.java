@@ -1,4 +1,4 @@
-package main.java.com.assignment.designPatterns.Builder.MessagingService;
+package main.java.com.assignment.designPatterns.Builder.MessagingService.self;
 
 
 public enum MessageType {

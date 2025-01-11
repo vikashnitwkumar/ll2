@@ -1,8 +1,4 @@
-package main.java.com.assignment.designPatterns.Singleton.ConnectionPool;
+package main.java.com.assignment.designPatterns.Singleton.ConnectionPool.offSoln;
 
 public class DatabaseConnection {
-    public boolean available;
-    public DatabaseConnection(){
-        available = true;
-    }
 }
