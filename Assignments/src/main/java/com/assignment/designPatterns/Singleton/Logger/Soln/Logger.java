@@ -1,4 +1,4 @@
-package main.java.com.assignment.designPatterns.Singleton.Logger.self;
+package main.java.com.assignment.designPatterns.Singleton.Logger.Soln;
 
 import org.springframework.boot.logging.LogLevel;
 

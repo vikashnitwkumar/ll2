@@ -1,21 +1,24 @@
-package main.java.com.assignment.designPatterns.Singleton.Logger.self;
+package main.java.com.assignment.designPatterns.Singleton.Logger.Soln;
+import org.springframework.boot.logging.LogLevel;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-// LoggerImpl class implementing Logger interface and Singleton pattern
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class LoggerImpl implements Logger {
-    private static volatile LoggerImpl instance;
-    private PrintWriter writer;
+
+    private static volatile Logger instance = null;
     private String logFilePath;
-    private boolean isClosed = false;  // Flag to track if the logger is closed
+    private PrintWriter logWriter;
 
-    // Private constructor to prevent instantiation
-    private LoggerImpl() {}
+    private LoggerImpl() {
+        // Private constructor to prevent external instantiation
+    }
 
-    // Singleton getInstance() method
-    public static LoggerImpl getInstance() {
+    public static synchronized Logger getInstance() {
+
         if (instance == null) {
             synchronized (LoggerImpl.class) {
                 if (instance == null) {
@@ -26,66 +29,49 @@ public class LoggerImpl implements Logger {
         return instance;
     }
 
-    // Reset the instance (to be used for testing or reinitialization)
     public static void resetInstance() {
         instance = null;
     }
 
-    // Method to set the log file path and initialize file writer
-    @Override
-    public void setLogFile(String filePath) {
-        if (writer != null) {
-            throw new IllegalStateException("Logger already initialized with a log file.");
-        }
-
-        try {
-            this.logFilePath = filePath;
-            FileWriter fileWriter = new FileWriter(filePath, true);  // Append mode
-            writer = new PrintWriter(fileWriter);
-        } catch (IOException e) {
-            throw new IllegalStateException("Error initializing log file.", e);
-        }
-    }
-
-    // Method to log messages with the given LogLevel
     @Override
     public void log(LogLevel level, String message) {
-        if (isClosed) {
-            throw new IllegalStateException("Logger is closed and cannot log messages.");
+        if (logWriter == null) {
+            throw new IllegalStateException("Log file not set. Call setLogFile() before logging.");
         }
-
-        if (writer == null) {
-            throw new IllegalStateException("Logger not initialized with a log file.");
-        }
-
-        // Create timestamp and format the log message
-        String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-        String logMessage = String.format("%s [%s] %s", timestamp, level, message);
-
-        // Write the log message to the file
-        writer.println(logMessage);
+        LocalDateTime timestamp = LocalDateTime.now();
+        String formattedMessage = "[" + timestamp.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) + "] "
+                + "[" + level.name() + "] " + message;
+        logWriter.println(formattedMessage);
     }
 
-    // Method to return the log file path
     @Override
     public String getLogFile() {
         return logFilePath;
     }
 
-    // Method to flush the logs to the file
     @Override
-    public void flush() {
-        if (writer != null) {
-            writer.flush();
+    public void setLogFile(String filePath) {
+        try {
+            close();
+            logFilePath = filePath;
+            logWriter = new PrintWriter(new FileWriter(logFilePath, true));
+        } catch (IOException e) {
+            throw new RuntimeException("Error setting log file: " + e.getMessage(), e);
         }
     }
 
-    // Method to close the logger and release resources
+    @Override
+    public void flush() {
+        if (logWriter != null) {
+            logWriter.flush();
+        }
+    }
+
     @Override
     public void close() {
-        if (writer != null) {
-            writer.close();
-            isClosed = true;  // Mark the logger as closed
+        if (logWriter != null) {
+            logWriter.close();
+            logWriter = null;
         }
     }
 }
