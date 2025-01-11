@@ -1,4 +1,4 @@
-package main.java.com.assignment.designPatterns.Builder.QueryBuilder.self;
+package main.java.com.assignment.designPatterns.Builder.DatabaseConfiguration.self;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
