@@ -1,6 +1,4 @@
-package main.java.com.assignment.designPatterns.Singleton.Prototype.Invoice.self;
-
-import main.java.com.assignment.designPatterns.Singleton.Prototype.ObjectCloning.self.User;
+package main.java.com.assignment.designPatterns.Prototype.Invoice.self;
 
 import java.util.HashMap;
 import java.util.Map;

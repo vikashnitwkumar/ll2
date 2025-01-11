@@ -1,4 +1,4 @@
-package main.java.com.assignment.designPatterns.Singleton.Prototype.ObjectCloning.self;
+package main.java.com.assignment.designPatterns.Prototype.ObjectCloning.self;
 
 import java.util.HashMap;
 import java.util.Map;

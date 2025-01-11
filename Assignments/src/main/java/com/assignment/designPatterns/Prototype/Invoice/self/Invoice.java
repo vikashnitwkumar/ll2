@@ -1,4 +1,4 @@
-package main.java.com.assignment.designPatterns.Singleton.Prototype.Invoice.self;
+package main.java.com.assignment.designPatterns.Prototype.Invoice.self;
 
 public class Invoice implements ClonableObject{
     private Long invoiceId;

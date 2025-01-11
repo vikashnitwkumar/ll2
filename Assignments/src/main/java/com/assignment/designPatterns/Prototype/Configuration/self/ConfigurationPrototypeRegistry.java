@@ -1,4 +1,4 @@
-package main.java.com.assignment.designPatterns.Singleton.Prototype.Configuration.self;
+package main.java.com.assignment.designPatterns.Prototype.Configuration.self;
 
 public interface ConfigurationPrototypeRegistry {
 
