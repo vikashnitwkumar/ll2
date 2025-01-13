@@ -1,13 +1,10 @@
 package src.main.java.com.assignment.designPatterns.observerStrategy.videoStreamingQuality.self;
 
-import
-
 public class Video {
     private String videoUrl;
     private VideoQuality videoQuality;
     private VideoCodec codec;
     private Integer bitrate;
-Integer abc = new Integer();
     public String getVideoUrl() {
         return videoUrl;
     }
