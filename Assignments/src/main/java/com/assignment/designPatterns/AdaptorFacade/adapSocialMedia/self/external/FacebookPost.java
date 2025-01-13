@@ -6,6 +6,13 @@ public class FacebookPost {
     private String status;
     private Long userId;
 
+    public FacebookPost(String id, String status, Long userId, Long timestamp) {
+        this.id = id;
+        this.status = status;
+        this.userId = userId;
+        this.timestamp = timestamp;
+    }
+
     public String getStatus() {
         return status;
     }
