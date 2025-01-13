@@ -1,8 +1,6 @@
 package src.main.java.com.assignment.designPatterns.observerStrategy.observerStockTradingManager.original;
 
-import com.assignment.question.services.AppService;
-import com.assignment.question.services.EmailService;
-import com.assignment.question.services.SmsService;
+import src.main.java.com.assignment.designPatterns.observerStrategy.observerStockTradingManager.original.services.*;
 
 public class StockTradingManager {
 
