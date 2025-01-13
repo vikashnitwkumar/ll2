@@ -1,9 +1,6 @@
-package src.main.java.com.assignment.designPatterns.observerStrategy.observerWeatherMonitoring.Original;
+package src.main.java.com.assignment.designPatterns.observerStrategy.observerWeatherMonitoring.official;
 
-
-import src.main.java.com.assignment.designPatterns.observerStrategy.observerWeatherMonitoring.Original.services.*;
-
-public class WeatherMonitoringApplication {
+public class WeatherMonitoringApplication extends Publisher {
 
     private double temperature;
     private double humidity;
@@ -11,10 +8,6 @@ public class WeatherMonitoringApplication {
     private double temperatureThreshold;
     private double humidityThreshold;
     private double pressureThreshold;
-
-    private TemperatureService temperatureService = new TemperatureService();
-    private HumidityService humidityService = new HumidityService();
-    private PressureService pressureService = new PressureService();
 
     // DO NOT MODIFY THIS CONSTRUCTOR
     public WeatherMonitoringApplication(double initialTemperature, double initialHumidity, double initialPressure,
@@ -34,15 +27,15 @@ public class WeatherMonitoringApplication {
         pressure = newPressure;
 
         if (temperature > temperatureThreshold) {
-            temperatureService.trigger(temperature);
+            notifyObservers(temperature);
         }
 
         if (humidity > humidityThreshold) {
-            humidityService.trigger(humidity);
+            notifyObservers(humidity);
         }
 
         if (pressure > pressureThreshold) {
-            pressureService.trigger(pressure);
+            notifyObservers(pressure);
         }
     }
 }

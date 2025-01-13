@@ -1,14 +1,12 @@
 package src.main.java.com.assignment.designPatterns.observerStrategy.observerWeatherMonitoring.official.services;
 
+
 import src.main.java.com.assignment.designPatterns.observerStrategy.observerWeatherMonitoring.official.Observer;
 import src.main.java.com.assignment.designPatterns.observerStrategy.observerWeatherMonitoring.official.utils.NotificationUtils;
 
-
-public class EmailService implements Observer {
+public class TemperatureService implements Observer {
     @Override
-    public void notifyObserver(String stockName, double currentPrice) {
-        String subject = "Price update for " + stockName;
-        String message = "New price is " + currentPrice;
-        NotificationUtils.sendEmail(subject, message);
+    public void notifyObserver(double value) {
+        NotificationUtils.sendNotification("New value is " + value);
     }
 }

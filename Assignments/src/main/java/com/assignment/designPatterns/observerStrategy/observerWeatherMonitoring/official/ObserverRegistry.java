@@ -5,5 +5,5 @@ public interface ObserverRegistry {
 
     void removeObserver(Observer observer);
 
-    void notifyObservers(String stockName, double currentPrice);
+    void notifyObservers(double value);
 }

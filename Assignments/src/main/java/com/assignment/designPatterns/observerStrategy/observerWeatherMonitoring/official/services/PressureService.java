@@ -4,11 +4,9 @@ package src.main.java.com.assignment.designPatterns.observerStrategy.observerWea
 import src.main.java.com.assignment.designPatterns.observerStrategy.observerWeatherMonitoring.official.Observer;
 import src.main.java.com.assignment.designPatterns.observerStrategy.observerWeatherMonitoring.official.utils.NotificationUtils;
 
-public class AppService implements Observer {
+public class PressureService implements Observer {
     @Override
-    public void notifyObserver(String stockName, double currentPrice) {
-        String subject = "Price update for " + stockName;
-        String message = "New price is " + currentPrice;
-        NotificationUtils.sendPush(subject, message);
+    public void notifyObserver(double value) {
+        NotificationUtils.sendNotification("New value is " + value);
     }
 }

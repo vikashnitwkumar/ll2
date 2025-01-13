@@ -1,5 +1,5 @@
 package src.main.java.com.assignment.designPatterns.observerStrategy.observerWeatherMonitoring.official;
 
 public interface Observer {
-    void notifyObserver(String stockName, double currentPrice);
+    void notifyObserver(double value);
 }
